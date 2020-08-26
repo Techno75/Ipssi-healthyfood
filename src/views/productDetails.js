@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Menu from './../components/menu';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 export default function ProductDetails({navigation}) {
     console.log(navigation);
   return (
     <View style={styles.ProductDetailsContainer}>
-        <Menu menuState={props.menuState}/>
         <Text>Je suis sur la page de détail d'un produit</Text>
         <View style={styles.btn}>
             <MaterialCommunityIcons

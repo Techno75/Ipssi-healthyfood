@@ -33,17 +33,14 @@ export default function Scanner({navigation}) {
         fetch(URL)
         .then((response) => response.json())
         .then((json) => {
-            console.log(json);
-          navigation.navigate('ProductDetails',
-          {
-            item: json
-          })
+          console.log(json);
+          navigation.navigate('ProductDetails', { item : json })
           toggleScanned(false)
         })
         .catch((error) => {
           console.error(error);
         });
-      };
+      }
 
     return (
     <View style={{ flex: 1 }}>
