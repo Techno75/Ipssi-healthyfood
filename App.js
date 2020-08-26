@@ -6,6 +6,7 @@ import Menu from './src/components/menu';
 import Home from './src/views/home';
 import Scanner from './src/views/scanner';
 import Account from './src/views/account';
+import ProductDetails from './src/views/productDetails';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -22,6 +23,8 @@ export default function App({navigation}) {
       setMenuState(true);
     }
   }
+
+
 
   const changeScreenView = (pageName)=>{
     navigation.navigate(pageName)
@@ -40,6 +43,7 @@ export default function App({navigation}) {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="Scanner" component={Scanner} />
+          <Stack.Screen name="ProductDetails" component={ProductDetails} />
        </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />

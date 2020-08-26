@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   },
   title : {
       paddingBottom : 10,
-      fontFamily : "Roboto",
       fontSize : 32,
       color : "white",
       fontWeight : "900",

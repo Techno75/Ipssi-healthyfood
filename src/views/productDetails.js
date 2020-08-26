@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Menu from './../components/menu';
 
 export default function ProductDetails({navigation}) {
-
+    console.log(navigation);
   return (
     <View style={styles.ProductDetailsContainer}>
         <Menu menuState={props.menuState}/>

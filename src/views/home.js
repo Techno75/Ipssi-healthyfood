@@ -11,7 +11,7 @@ export default function Home({navigation}) {
             <MaterialCommunityIcons
             name="barcode-scan"
             size={24}
-            color="black"
+            color="#FFFFFF"
             onPress={() => navigation.navigate('Scanner')}
             style={styles.icon}
             />
@@ -22,7 +22,6 @@ export default function Home({navigation}) {
 
  const styles = StyleSheet.create({
     homeContainer: {
-        backgroundColor : "grey",
         flex : 1,
         position : "relative",
     },
