@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import Header from './../components/header';
+import { createStackNavigator } from '@react-navigation/stack';
+import ProductList from './productList';
+import ProductDetails from './productDetails';
+
+const Stack = createStackNavigator();
 
 export default function Home({navigation}) {
 
   return (
     <View style={styles.homeContainer}>
-        <Text>Je suis sur la page d'accueil</Text>
-        <View style={styles.btn}>
-            <MaterialCommunityIcons
-            name="barcode-scan"
-            size={24}
-            color="#FFFFFF"
-            onPress={() => navigation.navigate('Scanner')}
-            style={styles.icon}
+        <Header navigation={navigation}/>
+        <Stack.Navigator 
+            screenOptions={{
+                headerShown: false
+            }}
+        >
+            <Stack.Screen 
+                name="ProductList" 
+                component={ProductList}
             />
-        </View>
+            <Stack.Screen
+                name="ProductDetails"
+                component={ProductDetails}
+            />
+        </Stack.Navigator>
+    
     </View>
   );
  }

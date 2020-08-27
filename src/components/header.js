@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import Menu from './menu';
 
 export default function Header(props) {
   return (
     <View style={styles.header}>
         <View style={styles.titleContainer}>
-            <Image style={styles.logo} source={require('./../assets/apple.png')}/>
+            <Image
+                style={styles.logo}
+                source={require('./../assets/apple.png')}
+            />
             <Text style={styles.title}>HealthyFood</Text>
         </View>
         <MaterialCommunityIcons
             name="menu"
             size={32}
             color="white"
-            onPress={props.changeMenuState}
+            onPress={() => props.navigation.toggleDrawer()}
             style={styles.menu}
         />
     </View>
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
       marginTop : 5,
   },
   menu :{
-      paddingBottom : 12,
-      paddingRight : 10
-  }
+    paddingBottom : 12,
+    paddingRight : 10
+}
 });

@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity  } from 'react-native';
 import { Camera } from 'expo-camera';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { BarCodeScanner } from 'expo-barcode-scanner'; 
+import { AsyncStorage } from 'react-native';
+import Header from './../components/header';
 import { Entypo } from '@expo/vector-icons'; 
 
 export default function Scanner({navigation}) {
 
     const [hasPermission, setHasPermission] = useState(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
     const [scanned, setScanned] = useState(false);
-    const [torchIsOn, toggleTorch] = useState(Camera.Constants.FlashMode.off);
+    const [userData, setUserData] = useState({});
+
+  const getUserData = () => {
+    AsyncStorage.getItem('UID1', (err, result) => {
+      setUserData(JSON.parse(result))
+    });  
+   }
 
     useEffect(() => {
         (async () => {
         const { status } = await Camera.requestPermissionsAsync();
         setHasPermission(status === 'granted');
+        getUserData();
         })();
     }, []);
 
@@ -26,16 +34,51 @@ export default function Scanner({navigation}) {
     }
 
     const handleBarCodeScanned = ({ type, data }) => {
-        console.log(data);
         setScanned(true);
-        const URL = "https://world.openfoodfacts.org/api/v0/product/3068320114453.json";
-        console.log('https://world.openfoodfacts.org/api/v0/product/' + data + '.json');
+        const URL = `https://world.openfoodfacts.org/api/v0/product/${data}.json`;
         fetch(URL)
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
-          navigation.navigate('ProductDetails', { item : json })
-          toggleScanned(false)
+          let userDataUpdated = {...userData};
+          userDataUpdated.productList.push( json.product);
+          AsyncStorage.setItem(
+            'UID1',
+            JSON.stringify(userData),
+            () => {
+              AsyncStorage.mergeItem(
+                'UID1',
+                JSON.stringify(userDataUpdated)
+              );
+            }
+          );
+          navigation.navigate('ProductDetails', { product : json.product });
+          setScanned(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+
+      const handleBarCodeScannedOnClick = ({ type, data }) => {
+        setScanned(true);
+        const URL = `https://world.openfoodfacts.org/api/v0/product/7613035833302.json`;
+        fetch(URL)
+        .then((response) => response.json())
+        .then((json) => {
+          let userDataUpdated = {...userData};
+          userDataUpdated.productList.push( json.product);
+          AsyncStorage.setItem(
+            'UID1',
+            JSON.stringify(userData),
+            () => {
+              AsyncStorage.mergeItem(
+                'UID1',
+                JSON.stringify(userDataUpdated)
+              );
+            }
+          );
+          navigation.navigate('ProductDetails', { product : json.product });
+          setScanned(false);
         })
         .catch((error) => {
           console.error(error);
@@ -44,29 +87,23 @@ export default function Scanner({navigation}) {
 
     return (
     <View style={{ flex: 1 }}>
-      <Camera
-        style={{ flex: 1 }}
-        type={type}
+      <Header navigation={navigation}/>
+      <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-       >
-        <View
+        style={{ flex: 1 }}
+      />
+      <View
           style={styles.flashIcon}>
           <TouchableOpacity
-           onPress={() => {
-            toggleTorch(
-            torchIsOn === Camera.Constants.FlashMode.off
-            ? Camera.Constants.FlashMode.torch
-            : Camera.Constants.FlashMode.off
-            )}}>
+           onPress={handleBarCodeScannedOnClick}>
             <Entypo name="flashlight" size={24} color="#FFFFFF" style={{padding: 15}}/>
           </TouchableOpacity>
         </View>
-      </Camera>
     </View>
     );
-    }
+  }
 
- const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     scannerContainer: {
         flex : 1,
         position : "relative",

@@ -1,50 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Header from './src/components/header';
-import Menu from './src/components/menu';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import Home from './src/views/home';
 import Scanner from './src/views/scanner';
 import Account from './src/views/account';
-import ProductDetails from './src/views/productDetails';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { AsyncStorage } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
-export default function App({navigation}) {
-  let [menuState, setMenuState] = useState(false);
-
-  const changeMenuState = () => {
-    if(menuState === true){
-      setMenuState(false);
-    }
-    else {
-      setMenuState(true);
-    }
+export default function App() {
+  
+  const initailStorage = {
+    userName : "Depretz",
+    userFirstName : "Guillaume",
+    userAge : 27,
+    userEmail : "gdepretz@gmail.com",
+    productList : []
   }
 
-
-
-  const changeScreenView = (pageName)=>{
-    navigation.navigate(pageName)
-  }
+  AsyncStorage.setItem(
+    'UID1',
+    JSON.stringify(initailStorage),
+  );
 
   return (
     <View style={styles.container}>
-      <Header changeMenuState={changeMenuState}/>
-      <Menu menuState={menuState} changeScreenView={changeScreenView}/>
       <NavigationContainer>
-       <Stack.Navigator
-        screenOptions={{
-          headerShown: false
-        }}
-       >
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Account" component={Account} />
-          <Stack.Screen name="Scanner" component={Scanner} />
-          <Stack.Screen name="ProductDetails" component={ProductDetails} />
-       </Stack.Navigator>
+        <Drawer.Navigator>
+            <Drawer.Screen name="Home" component={Home}/>
+            <Drawer.Screen name="Account" component={Account} />
+            <Drawer.Screen name="Scanner" component={Scanner} />
+        </Drawer.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
     </View>
