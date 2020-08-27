@@ -39,6 +39,12 @@ export default function Scanner({navigation}) {
         fetch(URL)
         .then((response) => response.json())
         .then((json) => {
+          if(json.status === 0){
+            setScanned(false);
+            alert("Produit non répertorié");
+            navigation.navigate('Scanner');
+            return false;
+          }
           let userDataUpdated = {...userData};
           userDataUpdated.productList.push( json.product);
           AsyncStorage.setItem(
@@ -65,6 +71,12 @@ export default function Scanner({navigation}) {
         fetch(URL)
         .then((response) => response.json())
         .then((json) => {
+          if(json.status === 0){
+            setScanned(false);
+            alert("Produit non répertorié");
+            navigation.navigate('Scanner');
+            return false;
+          }
           let userDataUpdated = {...userData};
           userDataUpdated.productList.push( json.product);
           AsyncStorage.setItem(
