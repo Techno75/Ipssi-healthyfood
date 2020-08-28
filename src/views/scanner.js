@@ -10,19 +10,11 @@ export default function Scanner({navigation}) {
 
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [userData, setUserData] = useState({});
-
-  const getUserData = () => {
-    AsyncStorage.getItem('UID1', (err, result) => {
-      setUserData(JSON.parse(result))
-    });  
-   }
 
     useEffect(() => {
         (async () => {
         const { status } = await Camera.requestPermissionsAsync();
         setHasPermission(status === 'granted');
-        getUserData();
         })();
     }, []);
 
@@ -32,6 +24,39 @@ export default function Scanner({navigation}) {
     if (hasPermission === false) {
         return <Text>No access to camera</Text>;
     }
+
+    const addProductToStaurage = async (product) => {
+      try{
+        let userData = JSON.parse(await AsyncStorage.getItem('UID1'));
+        userData.productList.push(product);
+        await AsyncStorage.setItem('UID1', JSON.stringify(userData));
+
+      } catch(e) {
+        console.log(e);
+      }
+    }
+
+    const buildObjectWithOnlyTheUsefullInformation = (product) =>{
+      return { 
+        image_front_url : product.image_front_url,
+        product_name : product.product_name,
+        brands : product.brands,
+        nutrition_grade_fr : product.nutrition_grade_fr,
+        ingredients_text_fr : product.ingredients_text_fr,
+        energy_100g : product.nutriments.energy_100g,
+        energy_unit : product.nutriments.energy_unit,
+        salt_100g : product.nutriments.salt_100g,
+        salt_unit : product.nutriments.salt_unit,
+        proteins_100g : product.nutriments.proteins_100g,
+        proteins_unit : product.nutriments.proteins_unit,
+        fat_100g : product.nutriments.fat_100g,
+        fat_unit : product.nutriments.fat_unit,
+        sugars_100g : product.nutriments.sugars_100g,
+        sugars_unit : product.nutriments.sugars_unit
+      }
+    }
+
+
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
@@ -45,19 +70,9 @@ export default function Scanner({navigation}) {
             navigation.navigate('Scanner');
             return false;
           }
-          let userDataUpdated = {...userData};
-          userDataUpdated.productList.push( json.product);
-          AsyncStorage.setItem(
-            'UID1',
-            JSON.stringify(userData),
-            () => {
-              AsyncStorage.mergeItem(
-                'UID1',
-                JSON.stringify(userDataUpdated)
-              );
-            }
-          );
-          navigation.navigate('ProductDetails', { product : json.product });
+          const formatedProduct = buildObjectWithOnlyTheUsefullInformation(json.product);
+          addProductToStaurage(formatedProduct);    
+          navigation.navigate('ProductDetails', { product : formatedProduct });
           setScanned(false);
         })
         .catch((error) => {
@@ -77,19 +92,9 @@ export default function Scanner({navigation}) {
             navigation.navigate('Scanner');
             return false;
           }
-          let userDataUpdated = {...userData};
-          userDataUpdated.productList.push( json.product);
-          AsyncStorage.setItem(
-            'UID1',
-            JSON.stringify(userData),
-            () => {
-              AsyncStorage.mergeItem(
-                'UID1',
-                JSON.stringify(userDataUpdated)
-              );
-            }
-          );
-          navigation.navigate('ProductDetails', { product : json.product });
+          const formatedProduct = buildObjectWithOnlyTheUsefullInformation(json.product);
+          addProductToStaurage(formatedProduct);         
+          navigation.navigate('ProductDetails', { product : formatedProduct });
           setScanned(false);
         })
         .catch((error) => {

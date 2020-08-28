@@ -33,11 +33,11 @@ export default function ProductDetails({route, navigation}) {
                 <View style={styles.bottomContainer}>
                     <Text style={{...styles.bold, ...styles.bottomText}}>In grédiant :</Text>
                     <Text style={styles.bottomText}>{product.ingredients_text_fr}</Text>
-                    <Text style={styles.bottomText}>Energie pour 100g : {product.nutriments.energy_100g} {product.nutriments.energy_unit}</Text>
-                    <Text style={styles.bottomText}>Sel pour 100g : {product.nutriments.salt_100g} {product.nutriments.salt_unit}</Text>
-                    <Text style={styles.bottomText}>Protéine pour 100g : {product.nutriments.proteins_100g} {product.nutriments.proteins_unit}</Text>
-                    <Text style={styles.bottomText}>Matières graces pour 100g : {product.nutriments.fat_100g} {product.nutriments.fat_unit}</Text>
-                    <Text style={styles.bottomText}>Sucre pour 100g : {product.nutriments.sugars_100g} {product.nutriments.sugars_unit}</Text>
+                    <Text style={styles.bottomText}>Energie pour 100g : {product.energy_100g} {product.energy_unit}</Text>
+                    <Text style={styles.bottomText}>Sel pour 100g : {product.salt_100g} {product.salt_unit}</Text>
+                    <Text style={styles.bottomText}>Protéine pour 100g : {product.proteins_100g} {product.proteins_unit}</Text>
+                    <Text style={styles.bottomText}>Matières graces pour 100g : {product.fat_100g} {product.fat_unit}</Text>
+                    <Text style={styles.bottomText}>Sucre pour 100g : {product.sugars_100g} {product.sugars_unit}</Text>
                 </View>
             </ScrollView>
             <View style={styles.btn2}>
