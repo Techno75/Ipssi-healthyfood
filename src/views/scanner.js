@@ -77,28 +77,6 @@ export default function Scanner({navigation}) {
         });
       }
 
-      const handleBarCodeScannedOnClick = ({ type, data }) => {
-        setScanned(true);
-        const URL = `https://world.openfoodfacts.org/api/v0/product/7613035833302.json`;
-        fetch(URL)
-        .then((response) => response.json())
-        .then((json) => {
-          if(json.status === 0){
-            setScanned(false);
-            alert("Produit non répertorié");
-            navigation.navigate('Scanner');
-            return false;
-          }
-          const formatedProduct = buildObjectWithOnlyTheUsefullInformation(json.product);
-          addProductToStaurage(formatedProduct);         
-          navigation.navigate('ProductDetails', { product : formatedProduct });
-          setScanned(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      }
-
     return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation}/>
@@ -109,10 +87,11 @@ export default function Scanner({navigation}) {
       <View
           style={styles.flashIcon}>
           <TouchableOpacity
-           onPress={handleBarCodeScannedOnClick}>
-            <Entypo name="flashlight" size={24} color="#FFFFFF" style={{padding: 15}}/>
+           onPress={() => navigation.navigate('ProductList')}>
+            <Entypo name="home" size={24} color="#FFFFFF" style={{padding: 15}}/>
           </TouchableOpacity>
-        </View>
+      </View>
+      <View style={styles.box}/>
     </View>
     );
   }
@@ -128,5 +107,15 @@ export default function Scanner({navigation}) {
         right: 30,
         backgroundColor : "#71D64E",
         borderRadius : 30
+    },
+    box : {
+      position : "absolute",
+      borderColor : "#000000",
+      top : 250,
+      bottom : 250,
+      left : 50,
+      right : 50,
+      zIndex : 20,
+      borderWidth : 3
     }
 });

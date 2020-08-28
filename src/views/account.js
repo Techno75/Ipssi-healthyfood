@@ -30,15 +30,23 @@ export default function Account({navigation}) {
     <View style={{ flex : 1}}>
         <Header navigation={navigation}/>
         <View style={styles.accountContainer}>
-            <Image
-                style={styles.logo}
-                source={require('./../assets/icone.png')}
-            />
-            <Text>{userData.name}</Text>
-            <Text>{userData.firstName}</Text>
-            <Text>{userData.age} ans</Text>
-            <Text>Email : {userData.email}</Text>
-            <Text>Nombre de produit scanné : {userData.numberOfProductScanned}</Text>
+            <View style={styles.topContainer}>
+                <Image
+                    style={styles.logo}
+                    source={require('./../assets/icone.png')}
+                />
+                <View style={styles.firstTextContainer}>
+                    <Text style={styles.topText}>{userData.name}</Text>
+                    <Text style={styles.topText}>{userData.firstName}</Text>
+                    <Text style={styles.topText}>{userData.age} ans</Text>
+                </View>      
+            </View>
+            <View style={styles.bottomTextContainer}>
+              <Text style={{textAlign : "center", fontSize : 15,}}>Email : {userData.email}</Text>
+            </View> 
+            <View style={styles.bottomTextContainer}>
+                <Text style={{textAlign : "center", fontSize : 15,}}>Nombre de produit scanné : {userData.numberOfProductScanned}</Text>
+            </View>         
             <View style={styles.btn3}>
               <FontAwesome
               name="pencil"
@@ -74,8 +82,18 @@ export default function Account({navigation}) {
         backgroundColor : "#FFFFFF",
         flex : 1,
         position : "relative",
-        justifyContent :"center",
-        alignItems : "center"
+    },
+    topContainer : {
+        flexDirection : "row",
+        justifyContent : "space-around",
+        paddingTop: 20,
+        paddingBottom: 20,
+        borderBottomWidth : 2,
+        borderBottomColor : "#000000"
+    },
+    firstTextContainer : {
+        width : 200,
+        justifyContent : "center",
     },
     btn : {
         position : "absolute",
@@ -94,7 +112,7 @@ export default function Account({navigation}) {
     },
     btn3 : {
         position : "absolute",
-        bottom: 100,
+        bottom: 170,
         right : 20,
         backgroundColor : '#71D64E',
         borderRadius : 30
@@ -105,5 +123,16 @@ export default function Account({navigation}) {
     logo : {
         height : 100,
         width : 100
+    },
+    topText :{
+        fontSize : 18,
+        fontWeight : "bold",
+        marginBottom : 5
+    },
+    bottomTextContainer : {
+        paddingTop: 25,
+        paddingBottom: 25,
+        borderBottomWidth : 2,
+        borderBottomColor : "#000000"
     }
 });

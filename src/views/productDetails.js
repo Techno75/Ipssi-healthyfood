@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
-import { AsyncStorage } from 'react-native';
 import Header from './../components/header';
 
 export default function ProductDetails({route, navigation}) {
