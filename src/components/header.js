@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import Menu from './menu';
 
 export default function Header(props) {
   return (
@@ -14,10 +13,10 @@ export default function Header(props) {
             <Text style={styles.title}>HealthyFood</Text>
         </View>
         <MaterialCommunityIcons
-            name="menu"
+            name="account"
             size={32}
             color="white"
-            onPress={() => props.navigation.toggleDrawer()}
+            onPress={() => props.navigation.navigate('Account')}
             style={styles.menu}
         />
     </View>

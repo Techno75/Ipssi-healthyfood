@@ -1,26 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { AsyncStorage } from 'react-native';
+import Header from './../components/header';
 
 export default function ProductList({navigation}) {
 
-   const [produlist, setProductList] = useState([]);
-    
-   const stockDataStorageInTheState = () => {
-    AsyncStorage.getItem('UID1', (err, result) => {
-        setProductList(JSON.parse(result).productList)
-        console.log(produlist.length);
-        console.log(produlist); 
-    });  
-   }
+    const [userData, setUserData] = useState({});
+    const [productList, setProductList] = useState([]);
 
-  useEffect(stockDataStorageInTheState,[]);
+    const stockDataStorageInTheState = () => {
+        AsyncStorage.getItem('UID1', (err, result) => {
+            let userDataParse = JSON.parse(result);
+            setProductList(userDataParse.productList)
+            console.log(userDataParse.productList); 
+        });  
+       }
+    
+      useEffect(stockDataStorageInTheState,[]);
 
   return (
     <View style={styles.accountContainer}>
-        {produlist.length === 0 }
-        <Text>Je suis sur la page home list de produit</Text>
+        <Header navigation={navigation}/>
+        {productList.length === 0 ? <Text>Aucun Produit Scanné</Text> : productList.map((product)=>{
+           return (
+                    <View>
+                        <Image source={{uri : product.image_front_url}} style={styles.smallIamge} />
+                        <Text>{product.product_name}</Text>
+                        <Text>{product.brands}</Text>
+                    </View>       
+           )
+        })}
         <View style={styles.btn}>
             <MaterialCommunityIcons
             name="barcode-scan"
@@ -46,5 +56,9 @@ export default function ProductList({navigation}) {
         backgroundColor : '#71D64E',
         padding : 15,
         borderRadius : 30
+    },
+    smallIamge : {
+        height : 100,
+        width : 100
     }
 });

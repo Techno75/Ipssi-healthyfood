@@ -30,7 +30,6 @@ export default function Scanner({navigation}) {
         let userData = JSON.parse(await AsyncStorage.getItem('UID1'));
         userData.productList.push(product);
         await AsyncStorage.setItem('UID1', JSON.stringify(userData));
-
       } catch(e) {
         console.log(e);
       }
@@ -55,8 +54,6 @@ export default function Scanner({navigation}) {
         sugars_unit : product.nutriments.sugars_unit
       }
     }
-
-
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);

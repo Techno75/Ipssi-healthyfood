@@ -3,23 +3,14 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 import { AsyncStorage } from 'react-native';
+import Header from './../components/header';
 
 export default function ProductDetails({route, navigation}) {
   const { product } = route.params;
 
-  const [produlist, setProductList] = useState([]);
-    
-  const stockDataStorageInTheState = () => {
-   AsyncStorage.getItem('UID1', (err, result) => {
-       setProductList(JSON.parse(result).productList)
-       console.log(produlist.length);
-   });  
-  }
-
- useEffect(stockDataStorageInTheState,[]);
-
   return (
     <View style={styles.ProductDetailsContainer}>
+        <Header navigation={navigation}/>
         <ScrollView >
                 <View style={styles.topContainer}>
                     <Image style={styles.image} source={{uri: product.image_front_url}} />

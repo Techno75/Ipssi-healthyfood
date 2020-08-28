@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from './../components/header';
 import { AsyncStorage } from 'react-native';
 import { Entypo } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons'; 
 
 export default function Account({navigation}) {
 
@@ -11,7 +12,7 @@ export default function Account({navigation}) {
 
     const stockDataStorageInTheState = () => {
         AsyncStorage.getItem('UID1', (err, result) => {
-            userDataParse = JSON.parse(result);
+            let userDataParse = JSON.parse(result);
             userDataTmp = {
                 name : userDataParse.userName,
                 firstName : userDataParse.userFirstName,
@@ -20,7 +21,6 @@ export default function Account({navigation}) {
                 numberOfProductScanned : userDataParse.productList.length
             }
             setUserData(userDataTmp)
-            console.log(userDataTmp); 
         });  
        }
     
@@ -39,6 +39,15 @@ export default function Account({navigation}) {
             <Text>{userData.age} ans</Text>
             <Text>Email : {userData.email}</Text>
             <Text>Nombre de produit scanné : {userData.numberOfProductScanned}</Text>
+            <View style={styles.btn3}>
+              <FontAwesome
+              name="pencil"
+              size={24}
+              color="#FFFFFF"
+              style={styles.icon} 
+              onPress={() => navigation.navigate('ChangeAccountInformation')}
+              />
+            </View>
             <View style={styles.btn2}>
                     <Entypo
                         name="home"
@@ -55,8 +64,7 @@ export default function Account({navigation}) {
                 onPress={() => navigation.navigate('Scanner')}
                 />
             </View>
-        </View>
-       
+        </View>  
     </View>
   );
  }
@@ -78,6 +86,13 @@ export default function Account({navigation}) {
         borderRadius : 30
     },
     btn2 : {
+        position : "absolute",
+        bottom: 100,
+        right : 20,
+        backgroundColor : '#71D64E',
+        borderRadius : 30
+    },
+    btn3 : {
         position : "absolute",
         bottom: 100,
         right : 20,
