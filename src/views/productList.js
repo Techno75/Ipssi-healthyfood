@@ -22,10 +22,11 @@ export default function ProductList({navigation}) {
     <View style={styles.accountContainer}>
         <Header navigation={navigation}/>
         <ScrollView >
-            {productList.length === 0 ? <Text>Aucun Produit Scanné</Text> : productList.map((product)=>{
+            {productList.length === 0 ? <Text>Aucun Produit Scanné</Text> : productList.map((product, index)=>{
             return (    
                 <TouchableOpacity
                  onPress={() =>  navigation.navigate('ProductDetails', { product }) }
+                 key={index}
                 >
                      <View style={styles.card}>
                             <Image source={{uri : product.image_front_url}} style={styles.smallIamge} />

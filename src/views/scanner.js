@@ -77,28 +77,6 @@ export default function Scanner({navigation}) {
         });
       }
 
-      const handleBarCodeScannedOnClick = ({ type, data }) => {
-        setScanned(true);        
-        const URL = `https://world.openfoodfacts.org/api/v0/product/3057640257773.json`;        
-        fetch(URL)        
-        .then((response) => response.json())        
-        .then((json) => {          
-          if(json.status === 0){            
-            setScanned(false);           
-             alert("Produit non répertorié");            
-            navigation.navigate('Scanner');            
-            return false;          
-          }          
-          const formatedProduct = buildObjectWithOnlyTheUsefullInformation(json.product);
-          addProductToStaurage(formatedProduct);                   
-          navigation.navigate('ProductDetails', { product : formatedProduct });          
-          setScanned(false);        
-        })       
-        .catch((error) => {          
-          console.error(error);        
-        });      
-      }
-
     return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation}/>
@@ -113,13 +91,6 @@ export default function Scanner({navigation}) {
             <Entypo name="home" size={24} color="#FFFFFF" style={{padding: 15}}/>
           </TouchableOpacity>
       </View>
-      <View
-          style={styles.flashIcon}>
-          <TouchableOpacity
-           onPress={handleBarCodeScannedOnClick }>
-            <Entypo name="home" size={24} color="#FFFFFF" style={{padding: 15}}/>
-          </TouchableOpacity>
-      </View>
       <View style={styles.box}/>
     </View>
     );
@@ -129,13 +100,6 @@ export default function Scanner({navigation}) {
     scannerContainer: {
         flex : 1,
         position : "relative",
-    },
-    flashIcon:{
-        position: "absolute",
-        bottom : 100,
-        right: 30,
-        backgroundColor : "#71D64E",
-        borderRadius : 30
     },
     homeIcon:{
       position: "absolute",
