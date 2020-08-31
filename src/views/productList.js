@@ -22,7 +22,7 @@ export default function ProductList({navigation}) {
     <View style={styles.accountContainer}>
         <Header navigation={navigation}/>
         <ScrollView >
-            {productList.length === 0 ? <Text>Aucun Produit Scanné</Text> : productList.map((product, index)=>{
+            {productList.length === 0 ? <View style={styles.noProductTexContainer}><Text style={styles.noProductTex}>Aucun Produit Scanné</Text></View> : productList.map((product, index)=>{
             return (    
                 <TouchableOpacity
                  onPress={() =>  navigation.navigate('ProductDetails', { product }) }
@@ -77,5 +77,14 @@ export default function ProductList({navigation}) {
         alignItems : "center",
         borderBottomColor : "#000000",
         borderBottomWidth : 1
+    },
+    noProductTexContainer : {
+        justifyContent : "center",
+        alignItems : "center",
+        height : 450,
+    },
+    noProductTex : {
+        fontSize : 20,
+        fontWeight : "bold"
     }
 });
