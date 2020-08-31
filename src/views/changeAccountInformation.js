@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, Image, Button, TextInput  } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import Header from './../components/header';
+import { AsyncStorage } from 'react-native';
 
 export default function changeAccountInformation({navigation}) {
   const [name, setUserName] = useState("");
@@ -52,7 +53,7 @@ export default function changeAccountInformation({navigation}) {
         value={email}
       />
       <Button
-        onPress={changeUserData}
+        onPress={() => changeUserData()}
         title="Enregistrer"
         color="#71D64E"
       />
