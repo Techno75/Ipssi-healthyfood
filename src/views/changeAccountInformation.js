@@ -9,6 +9,20 @@ export default function changeAccountInformation({navigation}) {
   const [age, setUserAge] = useState("");
   const [email, setUserEmail] = useState("");
 
+  const changeUserData = async (product) => {
+    try{
+      let userData = JSON.parse(await AsyncStorage.getItem('UID1'));
+      userData.userName = name;
+      userData.userFirstName = firsteName;
+      userData.userAge = age;
+      userData.userEmail = email;
+      await AsyncStorage.setItem('UID1', JSON.stringify(userData));
+      navigation.navigate('Account');
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
   return (
     <View style={styles.changeAccountInformationContainer}>
       <Header navigation={navigation}/>
@@ -38,7 +52,7 @@ export default function changeAccountInformation({navigation}) {
         value={email}
       />
       <Button
-        onPress={()=>{}}
+        onPress={changeUserData}
         title="Enregistrer"
         color="#71D64E"
       />
