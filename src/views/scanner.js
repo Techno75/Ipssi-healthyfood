@@ -77,6 +77,28 @@ export default function Scanner({navigation}) {
         });
       }
 
+      const handleBarCodeScannedOnClick = ({ type, data }) => {
+        setScanned(true);        
+        const URL = `https://world.openfoodfacts.org/api/v0/product/3057640257773.json`;        
+        fetch(URL)        
+        .then((response) => response.json())        
+        .then((json) => {          
+          if(json.status === 0){            
+            setScanned(false);           
+             alert("Produit non répertorié");            
+            navigation.navigate('Scanner');            
+            return false;          
+          }          
+          const formatedProduct = buildObjectWithOnlyTheUsefullInformation(json.product);
+          addProductToStaurage(formatedProduct);                   
+          navigation.navigate('ProductDetails', { product : formatedProduct });          
+          setScanned(false);        
+        })       
+        .catch((error) => {          
+          console.error(error);        
+        });      
+      }
+
     return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation}/>
@@ -85,9 +107,16 @@ export default function Scanner({navigation}) {
         style={{ flex: 1 }}
       />
       <View
-          style={styles.flashIcon}>
+          style={styles.homeIcon}>
           <TouchableOpacity
            onPress={() => navigation.navigate('ProductList')}>
+            <Entypo name="home" size={24} color="#FFFFFF" style={{padding: 15}}/>
+          </TouchableOpacity>
+      </View>
+      <View
+          style={styles.flashIcon}>
+          <TouchableOpacity
+           onPress={handleBarCodeScannedOnClick }>
             <Entypo name="home" size={24} color="#FFFFFF" style={{padding: 15}}/>
           </TouchableOpacity>
       </View>
@@ -103,11 +132,18 @@ export default function Scanner({navigation}) {
     },
     flashIcon:{
         position: "absolute",
-        bottom : 40,
+        bottom : 100,
         right: 30,
         backgroundColor : "#71D64E",
         borderRadius : 30
     },
+    homeIcon:{
+      position: "absolute",
+      bottom : 40,
+      right: 30,
+      backgroundColor : "#71D64E",
+      borderRadius : 30
+  },
     box : {
       position : "absolute",
       borderColor : "#000000",

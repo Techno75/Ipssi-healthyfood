@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { AsyncStorage } from 'react-native';
 import Header from './../components/header';
@@ -12,8 +12,7 @@ export default function ProductList({navigation}) {
     const stockDataStorageInTheState = () => {
         AsyncStorage.getItem('UID1', (err, result) => {
             let userDataParse = JSON.parse(result);
-            setProductList(userDataParse.productList)
-            console.log(userDataParse.productList); 
+            setProductList(userDataParse.productList) 
         });  
        }
     
@@ -22,15 +21,24 @@ export default function ProductList({navigation}) {
   return (
     <View style={styles.accountContainer}>
         <Header navigation={navigation}/>
-        {productList.length === 0 ? <Text>Aucun Produit Scanné</Text> : productList.map((product)=>{
-           return (
-                    <View>
-                        <Image source={{uri : product.image_front_url}} style={styles.smallIamge} />
-                        <Text>{product.product_name}</Text>
-                        <Text>{product.brands}</Text>
-                    </View>       
-           )
-        })}
+        <ScrollView >
+            {productList.length === 0 ? <Text>Aucun Produit Scanné</Text> : productList.map((product)=>{
+            return (    
+                <TouchableOpacity
+                 onPress={() =>  navigation.navigate('ProductDetails', { product }) }
+                >
+                     <View style={styles.card}>
+                            <Image source={{uri : product.image_front_url}} style={styles.smallIamge} />
+                            <View>
+                                <Text style={{fontWeight : "bold", width : 230}}>{product.product_name}</Text>
+                                <Text style={{width : 230}}>{product.brands}</Text>
+                                <Text>Nutriscore : {product.nutrition_grade_fr}</Text>
+                            </View>                    
+                        </View> 
+               </TouchableOpacity>                
+            )
+            })}
+        </ScrollView>
         <View style={styles.btn}>
             <MaterialCommunityIcons
             name="barcode-scan"
@@ -58,7 +66,15 @@ export default function ProductList({navigation}) {
         borderRadius : 30
     },
     smallIamge : {
-        height : 100,
-        width : 100
+        height : 150,
+        width : 150,
+        marginRight : 20
+    },
+    card : {
+        flexDirection : "row",
+        paddingRight : 20,
+        alignItems : "center",
+        borderBottomColor : "#000000",
+        borderBottomWidth : 1
     }
 });

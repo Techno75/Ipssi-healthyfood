@@ -21,7 +21,7 @@ export default function ProductDetails({route, navigation}) {
                 </View>
                 <View style={styles.separator}/>
                 <View style={styles.bottomContainer}>
-                    <Text style={{...styles.bold, ...styles.bottomText}}>In grédiant :</Text>
+                    <Text style={{...styles.bold, ...styles.bottomText}}>Ingrédiant :</Text>
                     <Text style={styles.bottomText}>{product.ingredients_text_fr}</Text>
                     <Text style={styles.bottomText}>Energie pour 100g : {product.energy_100g} {product.energy_unit}</Text>
                     <Text style={styles.bottomText}>Sel pour 100g : {product.salt_100g} {product.salt_unit}</Text>

@@ -19,7 +19,15 @@ export default function App() {
     userFirstName : "Guillaume",
     userAge : 27,
     userEmail : "gdepretz@gmail.com",
-    productList : []
+    productList : [{
+      "brands": "Volvic",
+      "image_front_url": "https://static.openfoodfacts.org/images/products/305/764/025/7773/front_fr.237.400.jpg",
+      "ingredients_text_fr": "EAU MINÉRALE NATURELLE",
+      "nutrition_grade_fr": "a",
+      "product_name": "Eau minérale naturelle",
+      "salt_100g": 0.003,
+      "salt_unit": "mg",
+    }]
   }
 
   AsyncStorage.setItem(
